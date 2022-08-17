@@ -35,6 +35,7 @@ export const updatePost = async (req, res) => {
             const updatedPost = await PostMessage.findByIdAndUpdate(_id, { ...post, _id }, { new: true });
             res.status(200).json(updatedPost);
         } catch (error) {
+            console.log(error);
             return res.status(404).send('Post not found');
         }
     }
@@ -56,7 +57,6 @@ export const deletePost = async (req, res) => {
 
 export const likePost = async (req, res) => {
     const { id } = req.params;
-    console.log(id);
     if (mongoose.Types.ObjectId.isValid(id)) {
         try {
             const post = await PostMessage.findById(id);
@@ -64,6 +64,7 @@ export const likePost = async (req, res) => {
             const updatedPost = await PostMessage.findByIdAndUpdate(id, { likeCount: post.likeCount + 1 }, { new: true });
             res.status(200).json(updatedPost);
         } catch (error) {
+            console.log(error);
             res.status(404).send('Post not found');
         }
     }
